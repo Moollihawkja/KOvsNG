@@ -1,3 +1,4 @@
-require(["/lib/ko_v2.3.0","products"], function(ko, products) {
-	console.log(ko, products);
+require(["../lib/ko_v2.3.0","../scripts/products"], function(ko, products) {
+	var $body = document.getElementsByTagName("body")[0];
+	ko.applyBindings(products, $body);
 });

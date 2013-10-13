@@ -7,13 +7,15 @@
 	<!-- Dependency Injection: Init page -->
 	<!-- Providers: Load the available products -->
 	<div>
-		<!-- ko foreach: products -->
+		<div>Number of products: <span data-bind="text: $root.length"></span></div>
+		<!-- ko foreach: $root -->
 		<div class="productContainer"> 
-			<div class="productImage"><img data-bind="attr: {src: image}"/></div>
+			<div class="productImage"><img data-bindx="attr: {src: image}"/></div>
 			<div class="productName"><span data-bind="text: name"></span></div>
 			<div class="productDescription"><span data-bind="text: description"></span></div>
-			<div class="productPrice"><span data-bind="text: price"></span></div>
-			<div class="productAddToCart"><button data-bind="click: addToCart"></div></div>
+			<div class="productPrice"><span data-bindx="text: price"></span></div>
+			<div class="productQuantity"><input data-bindx="value: quantity"/></div>
+			<div class="productAddToCart"><button data-bindx="click: addToCart">Add to Cart</button></div>
 		</div>
 		<!-- /ko -->
 	</div>

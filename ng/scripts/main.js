@@ -1,0 +1,3 @@
+function cartCtrl($scope) {
+	
+}
