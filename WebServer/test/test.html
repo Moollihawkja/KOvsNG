@@ -1,0 +1,158 @@
+<html>
+<head>
+	<title>Experiment Test</title>
+	<script src="jq.js"></script>
+	<style>
+		body {margin: 20px;}
+		table {margin: 10px;}
+		th {text-align: left;}
+		.bad { color: red; }
+		.good { color: green; }
+	</style>
+</head>
+<body>
+	<hr/>
+	<table cellpadding='5px'>
+		<thead>
+			<tr>
+				<th>Test</th>
+				<th>Result</th>
+			</tr>
+		</thead>
+		<tbody>											
+		</tbody>	
+	</table>
+	<hr/>
+	<div id='console'></div>
+	<script type="text/javascript">
+		$(function(){
+			var 
+				$console = $("#console"),
+				testNumber = 1, 
+				object = "KOvsNG",
+				testId = "5260b181f15b9b44e60e4383",
+				initTest =  function(testName) {
+					$("tbody").append("<tr id='" + testNumber + "'><td>" + testName + "</td><td class='bad'>loading</td></tr>");
+					return $("#" + testNumber++).children().last();
+				},
+				log = function(test, text) {
+					$console.html($console.html() + "<b>" + test + ":</b><br/>" + text + "<br/><br/>")
+					var html = $console.html();
+				},
+				testBadAPI = function() {
+					var $el = initTest("Bad API Call");
+					$.get("../api/bad/list", function(data){
+						if (data["error_msg"]) {
+							$el.attr("class", "good").text("good");
+							log("Bad API Call", JSON.stringify(data));
+							return;
+						}
+						$el.text("bad");
+						log("Bad API Call", JSON.stringify(data));
+					});
+				},
+				testBadCreate = function() {
+					var $el = initTest("Bad Create Call");
+					$.post( "../api/"+ object + "/create", { lsov: "Test", sfhv: "test" })
+			  		 	.done(function(data) {
+			    			if (data.error_msg) {
+								$el.attr("class", "good").text("good");
+								log("Bad Create Call", JSON.stringify(data));
+								return;
+							}
+							$el.text("bad");
+						})
+					;
+				},
+				testBadUpdate = function() {
+					var $el = initTest("Bad Update Call");
+					$.post( "../api/"+ object + "/update/" + testId, { lsov: "Test", sfhv: "test" })
+			  		 	.done(function(data) {
+			    			if (data.error_msg) {
+								$el.attr("class", "good").text("good");
+								log("Bad Update Call", JSON.stringify(data));
+								return;
+							}
+							$el.text("bad");
+						})
+					;
+				},
+				testListAll = function() {
+					var $el = initTest("Get All KOvsNG");
+					$.get("../api/"+ object + "/list", function(data){
+						if (data.length > 0) {
+							$el.attr("class", "good").text("good");
+							log("Get All KOvsNG", JSON.stringify(data));
+							return;
+						}
+						$el.text("bad");
+						log("Get All KOvsNG", JSON.stringify(data));
+					});
+				},
+				testReadOne = function() {
+					var $el = initTest("Read KOvsNG");
+					$.get("../api/"+ object + "/read/" + testId, function(data){
+						if (data.length && data[0].name) {
+							$el.attr("class", "good").text("good");
+							log("Read KOvsNG", JSON.stringify(data));
+							return;
+						}
+						$el.text("bad");
+						log("Read KOvsNG", JSON.stringify(data));
+					});	
+				},
+				testDeleteKOvsNG = function(id) {
+					var $el = initTest("Delete KOvsNG");
+					$.post("../api/"+ object + "/delete/" + id)
+			  		 	.done(function(data) {
+			    			if (data["delete_count"] === 1) {
+								$el.attr("class", "good").text("good");
+								log("Delete KOvsNG", JSON.stringify(data));
+								return;
+							}
+							$el.text("bad");
+							log("Delete KOvsNG", JSON.stringify(data));
+						})
+					;
+				},
+				testUpdateKOvsNG = function(id) {
+					var $el = initTest("Update KOvsNG");
+					$.post("../api/"+ object + "/update/" + id, {name:"TEST",department:"test"})
+			  		 	.done(function(data) {
+			    			if (data["update_count"] === 1) {
+								$el.attr("class", "good").text("good");
+								log("Update KOvsNG", JSON.stringify(data));
+								testDeleteKOvsNG(id);
+								return;
+							}
+							$el.text("bad");
+							log("Update KOvsNG", JSON.stringify(data));
+						})
+					;
+				},
+				testCreateKOvsNG = function() {
+					var $el = initTest("Create KOvsNG");
+					$.post( "../api/"+ object + "/create", { name: "Test", department: "test" })
+			  		 	.done(function(data) {
+			    			if (data.length > 0) {
+								$el.attr("class", "good").text("good");
+								log("Create KOvsNG", JSON.stringify(data));
+								testUpdateKOvsNG(data[0]._id);
+								return;
+							}
+							$el.text("bad");
+						})
+					;
+				}
+			;
+
+			testListAll();
+			testReadOne();
+			testCreateKOvsNG();	
+			testBadAPI();
+			testBadCreate();
+			testBadUpdate();	
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+<head>
+	<title>The Knockout Store</title>
+	<script src="/KOCart/lib/jquery_2.0.3.js"></script>
+	<script src="/KOCart/lib/address_v1.5.js"></script>
+	<script data-main="/KOCart/scripts/main" src="/KOCart/lib/require_v2.1.8.js"></script>
+</head>
+<body>	
+	<!-- Dependency Injection: Init page -->
+	<!-- Providers: Load the available products -->
+	<div>
+		<div>Number of products: <span data-bind="text: $root.length"></span></div>
+		<!-- ko foreach: $root -->
+		<div class="productContainer"> 
+			<div class="productImage"><img data-bindx="attr: {src: image}"/></div>
+			<div class="productName"><span data-bind="text: name"></span></div>
+			<div class="productDescription"><span data-bind="text: description"></span></div>
+			<div class="productPrice"><span data-bindx="text: price"></span></div>
+			<div class="productQuantity"><input data-bindx="value: quantity"/></div>
+			<div class="productAddToCart"><button data-bindx="click: addToCart">Add to Cart</button></div>
+		</div>
+		<!-- /ko -->
+	</div>
+	<script>
+		$(function() { console.log($.address);})
+	</script>
+	<!-- Two way binding: Add Products to cart -->
+	<!-- Routing: Check out Products -->
+	<!-- Services: Deliver the products -->
+
+	<!-- Templates -->
+	<script id="productTemplate" type="text/html">
+	</script>
+</body>
+</html>
