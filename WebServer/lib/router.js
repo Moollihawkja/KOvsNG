@@ -7,10 +7,11 @@ var initModule,
 	makeMongoId = crud.makeMongoID
 ;
 
+
 // --- Public Methods
 initModule = function(app, server, path) {
 
-	app.get('/list', function(req, res) {
+	app.get('/contact', function(req, res) {
 		fsHandle.readFile(path + '/KOCart/cart.html', 'utf8', function(err,data){
 			console.log(path + '/KOCart/.html');
 			res.contentType('html');

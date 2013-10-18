@@ -6,24 +6,22 @@
 	<script data-main="/KOCart/scripts/main" src="/KOCart/lib/require_v2.1.8.js"></script>
 </head>
 <body>	
-	<!-- Dependency Injection: Init page -->
-	<!-- Providers: Load the available products -->
 	<div>
-		<div>Number of products: <span data-bind="text: $root.length"></span></div>
-		<!-- ko foreach: $root -->
-		<div class="productContainer"> 
-			<div class="productImage"><img data-bindx="attr: {src: image}"/></div>
-			<div class="productName"><span data-bind="text: name"></span></div>
-			<div class="productDescription"><span data-bind="text: description"></span></div>
-			<div class="productPrice"><span data-bindx="text: price"></span></div>
-			<div class="productQuantity"><input data-bindx="value: quantity"/></div>
-			<div class="productAddToCart"><button data-bindx="click: addToCart">Add to Cart</button></div>
-		</div>
-		<!-- /ko -->
+		<div><button data-bind="click: listAll">List All</button></div>
 	</div>
-	<script>
-		$(function() { console.log($.address);})
-	</script>
+
+	<!-- ko foreach: contacts -->
+	<div>
+		<div data-bind="text: name, visible: !isEditable()"></div>
+		<input data-bind="value: name, visible: isEditable"/>
+		<div data-bind="text: department, visible: !isEditable()"></div>
+		<select data-bind="value: department, options: departments, visible: isEditable"></select>
+		<button data-bind="click: view">View</button>
+		<button data-bind="click: edit, visible: !isEditable()">Edit</button>
+		<button data-bind="click: save, visible: isEditable">Save</button>
+	</div>
+	<!-- /ko -->
+
 	<!-- Two way binding: Add Products to cart -->
 	<!-- Routing: Check out Products -->
 	<!-- Services: Deliver the products -->
