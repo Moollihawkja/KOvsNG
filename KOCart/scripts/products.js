@@ -1,5 +1,5 @@
 
-define([], function products() {
+define([], function () {
 	return [
 		{id: 0, name: 'Cabbage Kimchee', description: 'Spicy', image: '/images/cabbage.png', price: '5'},
 		{id: 0, name: 'Cucumber Kimchee', description: 'Spicy Pickles', image: '/images/cucumber.png', price: '7.5'},
