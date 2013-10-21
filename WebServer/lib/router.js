@@ -13,7 +13,6 @@ initModule = function(app, server, path) {
 
 	app.get('/contact', function(req, res) {
 		fsHandle.readFile(path + '/KOCart/cart.html', 'utf8', function(err,data){
-			console.log(path + '/KOCart/.html');
 			res.contentType('html');
 			res.send(data);
 		});
@@ -38,6 +37,13 @@ initModule = function(app, server, path) {
 	});
 
 	app.post('/api/:obj/create', function(req, res){
+		crud.construct(req.params.obj, req.body, function(result_map){
+			res.send(result_map);
+		});
+	});
+
+	app.post('/api/:obj/bulkAdd', function(req, res){
+		console.log(req.body);
 		crud.construct(req.params.obj, req.body, function(result_map){
 			res.send(result_map);
 		});

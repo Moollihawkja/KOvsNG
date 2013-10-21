@@ -1,6 +1,14 @@
 
 require(["/KOCart/lib/ko_v2.3.0.js"],
 	function(ko) {
+
+	//	ko.bindingHandlers.smartImage = {
+	//init: function() {…},
+	//update: function() {…}
+//}
+
+
+
 		var $body = document.getElementsByTagName("body")[0];
 
 		function ContactViewModel(contact, viewModel) {
