@@ -1,0 +1,60 @@
+<html ng-app="demoApp">
+<head>
+	<title>Angular Cart</title>
+</head>
+<body>
+	<div>
+		<div ng-view=""></div>
+	</div>
+	<script src="/NGCart/lib/ng_v1.0.8.js"></script>
+
+	<script>
+		var demoApp = angular.module('demoApp', []);
+		
+		demoApp.config(function($routeProvider){
+			$routeProvider
+				.when('/', {
+					controller: "SimpleController",
+					templateUrl: 'Partials/View1.html'
+				})
+				.when('/view2', {
+					controller: "SimpleController",
+					templateUrl: 'Partials/View2.html'
+				})
+				.otherwise({redirectTo: "/"})
+		});
+
+		demoApp.factory('simpleFactory', function($http) {
+			//$http get, put etc.
+			//Services -> use this and the function is the factory object returned
+			var customers = [
+				{ name: 'John Smith', city: 'Phoenix'}, 
+				{ name: 'Another Name', city: 'New York'}, 
+				{ name: 'Name three', city: 'San Francisco'}
+			];
+			var factory = {};
+			factory.getCustomers = function(){
+				return customers;
+			};
+			factory.postCustomer = function(customer) {
+
+			};
+			return factory;
+		});
+
+	
+		demoApp.controller("SimpleController", function($scope, simpleFactory){
+			$scope.customers = [];
+
+			init();
+			function init() {
+				$scope.customers = simpleFactory.getCustomers();;
+			}
+
+			$scope.addCustomer = function() {
+				$scope.customers.push({name: $scope.newCustomer.name, city: $scope.newCustomer.city});
+			};
+		});
+	</script>
+</body>
+</html>
